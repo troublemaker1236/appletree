@@ -14,7 +14,11 @@ return [
         'log',
         'common\bootstrap\SetUp'
     ],
-    'modules' => [],
+    'modules' => [
+        'gridview' => [
+            'class' => '\kartik\grid\Module'
+        ]
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',

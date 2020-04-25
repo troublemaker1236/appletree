@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\helpers;
+namespace core\helpers;
 
 use core\entities\User\User;
 use yii\helpers\ArrayHelper;

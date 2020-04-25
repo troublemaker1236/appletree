@@ -24,7 +24,6 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  *
- * @property Network[] $networks
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -72,28 +71,6 @@ class User extends ActiveRecord implements IdentityInterface
         $this->email_confirm_token = null;
     }
 
-    public static function signupByNetwork($network, $identity): self
-    {
-        $user = new User();
-        $user->created_at = time();
-        $user->status = self::STATUS_ACTIVE;
-        $user->generateAuthKey();
-        $user->networks = [Network::create($network, $identity)];
-        return $user;
-    }
-
-    public function attachNetwork($network, $identity): void
-    {
-        $networks = $this->networks;
-        foreach ($networks as $current) {
-            if ($current->isFor($network, $identity)) {
-                throw new \DomainException('Network is already attached.');
-            }
-        }
-        $networks[] = Network::create($network, $identity);
-        $this->networks = $networks;
-    }
-
     public function requestPasswordReset(): void
     {
         if (!empty($this->password_reset_token) && self::isPasswordResetTokenValid($this->password_reset_token)) {
@@ -121,11 +98,6 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->status === self::STATUS_ACTIVE;
     }
 
-    public function getNetworks(): ActiveQuery
-    {
-        return $this->hasMany(Network::className(), ['user_id' => 'id']);
-    }
-
     /**
      * @inheritdoc
      */
@@ -143,7 +115,6 @@ class User extends ActiveRecord implements IdentityInterface
             TimestampBehavior::className(),
             [
                 'class' => SaveRelationsBehavior::className(),
-                'relations' => ['networks'],
             ],
         ];
     }

@@ -32,6 +32,7 @@
                 'items' => [
                     ['label' => 'Management', 'options' => ['class' => 'header']],
                     ['label' => 'Users', 'icon' => 'user', 'url' => ['/user/index'], 'active' => $this->context->id == 'user/index'],
+                    ['label' => 'Apples', 'icon' => 'apple', 'url' => ['/apple/index'], 'active' => $this->context->id == 'apple/index'],
                 ],
             ]
         ) ?>

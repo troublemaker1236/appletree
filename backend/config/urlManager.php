@@ -9,6 +9,8 @@ return [
     'showScriptName' => false,
     'rules' => [
         '' => 'site/index',
+        'apple/generate' => 'apple/generate',
+        'apple/deleteall' => 'apple/deleteall',
         '<_a:login|logout>' => 'auth/<_a>',
 
         '<_c:[\w\-]+>' => '<_c>/index',
